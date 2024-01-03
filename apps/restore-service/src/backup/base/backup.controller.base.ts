@@ -18,104 +18,104 @@ import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
-import { UserService } from "../user.service";
+import { BackupService } from "../backup.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { UserCreateInput } from "./UserCreateInput";
-import { User } from "./User";
-import { UserFindManyArgs } from "./UserFindManyArgs";
-import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
-import { UserUpdateInput } from "./UserUpdateInput";
+import { BackupCreateInput } from "./BackupCreateInput";
+import { Backup } from "./Backup";
+import { BackupFindManyArgs } from "./BackupFindManyArgs";
+import { BackupWhereUniqueInput } from "./BackupWhereUniqueInput";
+import { BackupUpdateInput } from "./BackupUpdateInput";
 import { RestoreFindManyArgs } from "../../restore/base/RestoreFindManyArgs";
 import { Restore } from "../../restore/base/Restore";
 import { RestoreWhereUniqueInput } from "../../restore/base/RestoreWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
-export class UserControllerBase {
+export class BackupControllerBase {
   constructor(
-    protected readonly service: UserService,
+    protected readonly service: BackupService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
-  @swagger.ApiCreatedResponse({ type: User })
+  @swagger.ApiCreatedResponse({ type: Backup })
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "create",
     possession: "any",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async createUser(@common.Body() data: UserCreateInput): Promise<User> {
-    return await this.service.createUser({
+  async createBackup(@common.Body() data: BackupCreateInput): Promise<Backup> {
+    return await this.service.createBackup({
       data: data,
       select: {
         createdAt: true,
-        firstName: true,
+        fileCount: true,
         id: true,
-        lastName: true,
-        roles: true,
+        note: true,
+        size: true,
+        status: true,
         updatedAt: true,
-        username: true,
       },
     });
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
-  @swagger.ApiOkResponse({ type: [User] })
-  @ApiNestedQuery(UserFindManyArgs)
+  @swagger.ApiOkResponse({ type: [Backup] })
+  @ApiNestedQuery(BackupFindManyArgs)
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "read",
     possession: "any",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async users(@common.Req() request: Request): Promise<User[]> {
-    const args = plainToClass(UserFindManyArgs, request.query);
-    return this.service.users({
+  async backups(@common.Req() request: Request): Promise<Backup[]> {
+    const args = plainToClass(BackupFindManyArgs, request.query);
+    return this.service.backups({
       ...args,
       select: {
         createdAt: true,
-        firstName: true,
+        fileCount: true,
         id: true,
-        lastName: true,
-        roles: true,
+        note: true,
+        size: true,
+        status: true,
         updatedAt: true,
-        username: true,
       },
     });
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
-  @swagger.ApiOkResponse({ type: User })
+  @swagger.ApiOkResponse({ type: Backup })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "read",
     possession: "own",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async user(
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<User | null> {
-    const result = await this.service.user({
+  async backup(
+    @common.Param() params: BackupWhereUniqueInput
+  ): Promise<Backup | null> {
+    const result = await this.service.backup({
       where: params,
       select: {
         createdAt: true,
-        firstName: true,
+        fileCount: true,
         id: true,
-        lastName: true,
-        roles: true,
+        note: true,
+        size: true,
+        status: true,
         updatedAt: true,
-        username: true,
       },
     });
     if (result === null) {
@@ -128,32 +128,32 @@ export class UserControllerBase {
 
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
-  @swagger.ApiOkResponse({ type: User })
+  @swagger.ApiOkResponse({ type: Backup })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "update",
     possession: "any",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async updateUser(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() data: UserUpdateInput
-  ): Promise<User | null> {
+  async updateBackup(
+    @common.Param() params: BackupWhereUniqueInput,
+    @common.Body() data: BackupUpdateInput
+  ): Promise<Backup | null> {
     try {
-      return await this.service.updateUser({
+      return await this.service.updateBackup({
         where: params,
         data: data,
         select: {
           createdAt: true,
-          firstName: true,
+          fileCount: true,
           id: true,
-          lastName: true,
-          roles: true,
+          note: true,
+          size: true,
+          status: true,
           updatedAt: true,
-          username: true,
         },
       });
     } catch (error) {
@@ -167,30 +167,30 @@ export class UserControllerBase {
   }
 
   @common.Delete("/:id")
-  @swagger.ApiOkResponse({ type: User })
+  @swagger.ApiOkResponse({ type: Backup })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "delete",
     possession: "any",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async deleteUser(
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<User | null> {
+  async deleteBackup(
+    @common.Param() params: BackupWhereUniqueInput
+  ): Promise<Backup | null> {
     try {
-      return await this.service.deleteUser({
+      return await this.service.deleteBackup({
         where: params,
         select: {
           createdAt: true,
-          firstName: true,
+          fileCount: true,
           id: true,
-          lastName: true,
-          roles: true,
+          note: true,
+          size: true,
+          status: true,
           updatedAt: true,
-          username: true,
         },
       });
     } catch (error) {
@@ -213,7 +213,7 @@ export class UserControllerBase {
   })
   async findRestores(
     @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
+    @common.Param() params: BackupWhereUniqueInput
   ): Promise<Restore[]> {
     const query = plainToClass(RestoreFindManyArgs, request.query);
     const results = await this.service.findRestores(params.id, {
@@ -249,12 +249,12 @@ export class UserControllerBase {
 
   @common.Post("/:id/restores")
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "update",
     possession: "any",
   })
   async connectRestores(
-    @common.Param() params: UserWhereUniqueInput,
+    @common.Param() params: BackupWhereUniqueInput,
     @common.Body() body: RestoreWhereUniqueInput[]
   ): Promise<void> {
     const data = {
@@ -262,7 +262,7 @@ export class UserControllerBase {
         connect: body,
       },
     };
-    await this.service.updateUser({
+    await this.service.updateBackup({
       where: params,
       data,
       select: { id: true },
@@ -271,12 +271,12 @@ export class UserControllerBase {
 
   @common.Patch("/:id/restores")
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "update",
     possession: "any",
   })
   async updateRestores(
-    @common.Param() params: UserWhereUniqueInput,
+    @common.Param() params: BackupWhereUniqueInput,
     @common.Body() body: RestoreWhereUniqueInput[]
   ): Promise<void> {
     const data = {
@@ -284,7 +284,7 @@ export class UserControllerBase {
         set: body,
       },
     };
-    await this.service.updateUser({
+    await this.service.updateBackup({
       where: params,
       data,
       select: { id: true },
@@ -293,12 +293,12 @@ export class UserControllerBase {
 
   @common.Delete("/:id/restores")
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "Backup",
     action: "update",
     possession: "any",
   })
   async disconnectRestores(
-    @common.Param() params: UserWhereUniqueInput,
+    @common.Param() params: BackupWhereUniqueInput,
     @common.Body() body: RestoreWhereUniqueInput[]
   ): Promise<void> {
     const data = {
@@ -306,7 +306,7 @@ export class UserControllerBase {
         disconnect: body,
       },
     };
-    await this.service.updateUser({
+    await this.service.updateBackup({
       where: params,
       data,
       select: { id: true },

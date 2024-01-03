@@ -11,15 +11,32 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
+import { Backup } from "../../backup/base/Backup";
+import {
+  ValidateNested,
+  IsOptional,
+  IsDate,
+  IsString,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { Restore } from "../../restore/base/Restore";
+import { User } from "../../user/base/User";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
+import { EnumRestoreStatus } from "./EnumRestoreStatus";
 
 @ObjectType()
-class User {
+class Restore {
+  @ApiProperty({
+    required: false,
+    type: () => Backup,
+  })
+  @ValidateNested()
+  @Type(() => Backup)
+  @IsOptional()
+  backup?: Backup | null;
+
   @ApiProperty({
     required: true,
   })
@@ -29,15 +46,22 @@ class User {
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
-    type: String,
+    required: true,
+    type: () => User,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => User)
+  createdBy?: User;
+
+  @ApiProperty({
+    required: false,
+  })
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  firstName!: string | null;
+  details!: JsonValue;
 
   @ApiProperty({
     required: true,
@@ -48,31 +72,14 @@ class User {
   id!: string;
 
   @ApiProperty({
-    required: false,
-    type: String,
+    required: true,
+    enum: EnumRestoreStatus,
   })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
+  @IsEnum(EnumRestoreStatus)
+  @Field(() => EnumRestoreStatus, {
     nullable: true,
   })
-  lastName!: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Restore],
-  })
-  @ValidateNested()
-  @Type(() => Restore)
-  @IsOptional()
-  restores?: Array<Restore>;
-
-  @ApiProperty({
-    required: true,
-  })
-  @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  roles!: JsonValue;
+  status?: "Success" | "Failed";
 
   @ApiProperty({
     required: true,
@@ -81,14 +88,6 @@ class User {
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  username!: string;
 }
 
-export { User as User };
+export { Restore as Restore };

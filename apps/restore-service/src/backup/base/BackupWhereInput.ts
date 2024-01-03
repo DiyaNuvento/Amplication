@@ -11,24 +11,25 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { IntFilter } from "../../util/IntFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
+import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { RestoreListRelationFilter } from "../../restore/base/RestoreListRelationFilter";
+import { EnumBackupStatus } from "./EnumBackupStatus";
 
 @InputType()
-class UserWhereInput {
+class BackupWhereInput {
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: IntFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => IntFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => IntFilter, {
     nullable: true,
   })
-  firstName?: StringNullableFilter;
+  fileCount?: IntFilter;
 
   @ApiProperty({
     required: false,
@@ -43,14 +44,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: StringFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => StringFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => StringFilter, {
     nullable: true,
   })
-  lastName?: StringNullableFilter;
+  note?: StringFilter;
 
   @ApiProperty({
     required: false,
@@ -66,14 +67,25 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: IntFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => IntFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => IntFilter, {
     nullable: true,
   })
-  username?: StringFilter;
+  size?: IntFilter;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumBackupStatus,
+  })
+  @IsEnum(EnumBackupStatus)
+  @IsOptional()
+  @Field(() => EnumBackupStatus, {
+    nullable: true,
+  })
+  status?: "Success" | "Failed" | "OnProgress" | "Canceled" | "PartialSuccess";
 }
 
-export { UserWhereInput as UserWhereInput };
+export { BackupWhereInput as BackupWhereInput };

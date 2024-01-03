@@ -11,59 +11,40 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { RestoreUpdateManyWithoutUsersInput } from "./RestoreUpdateManyWithoutUsersInput";
+import { BackupWhereUniqueInput } from "../../backup/base/BackupWhereUniqueInput";
+import { ValidateNested, IsOptional, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { EnumRestoreStatus } from "./EnumRestoreStatus";
 
 @InputType()
-class UserUpdateInput {
+class RestoreUpdateInput {
   @ApiProperty({
     required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  firstName?: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  lastName?: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  password?: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => RestoreUpdateManyWithoutUsersInput,
+    type: () => BackupWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => RestoreUpdateManyWithoutUsersInput)
+  @Type(() => BackupWhereUniqueInput)
   @IsOptional()
-  @Field(() => RestoreUpdateManyWithoutUsersInput, {
+  @Field(() => BackupWhereUniqueInput, {
     nullable: true,
   })
-  restores?: RestoreUpdateManyWithoutUsersInput;
+  backup?: BackupWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  createdBy?: UserWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -73,18 +54,18 @@ class UserUpdateInput {
   @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  roles?: InputJsonValue;
+  details?: InputJsonValue;
 
   @ApiProperty({
     required: false,
-    type: String,
+    enum: EnumRestoreStatus,
   })
-  @IsString()
+  @IsEnum(EnumRestoreStatus)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => EnumRestoreStatus, {
     nullable: true,
   })
-  username?: string;
+  status?: "Success" | "Failed";
 }
 
-export { UserUpdateInput as UserUpdateInput };
+export { RestoreUpdateInput as RestoreUpdateInput };

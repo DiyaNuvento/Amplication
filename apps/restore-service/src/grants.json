@@ -31,121 +31,61 @@
   },
   {
     "role": "user",
-    "resource": "Order",
+    "resource": "Restore",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Order",
+    "resource": "Restore",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Order",
+    "resource": "Restore",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Order",
+    "resource": "Restore",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Order",
+    "resource": "Restore",
     "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Backup",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Backup",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Backup",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
+    "resource": "Backup",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Customer",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Address",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Address",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Address",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Address",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Address",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Product",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Product",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Product",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Product",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Product",
+    "resource": "Backup",
     "action": "read:any",
     "attributes": "*"
   }

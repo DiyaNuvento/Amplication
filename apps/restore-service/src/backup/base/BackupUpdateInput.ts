@@ -11,25 +11,29 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { RestoreUpdateManyWithoutUsersInput } from "./RestoreUpdateManyWithoutUsersInput";
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  ValidateNested,
+  IsEnum,
+} from "class-validator";
+import { RestoreUpdateManyWithoutBackupsInput } from "./RestoreUpdateManyWithoutBackupsInput";
 import { Type } from "class-transformer";
-import { IsJSONValue } from "../../validators";
-import { GraphQLJSON } from "graphql-type-json";
-import { InputJsonValue } from "../../types";
+import { EnumBackupStatus } from "./EnumBackupStatus";
 
 @InputType()
-class UserUpdateInput {
+class BackupUpdateInput {
   @ApiProperty({
     required: false,
-    type: String,
+    type: Number,
   })
-  @IsString()
+  @IsInt()
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => Number, {
     nullable: true,
   })
-  firstName?: string | null;
+  fileCount?: number;
 
   @ApiProperty({
     required: false,
@@ -40,51 +44,41 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  lastName?: string | null;
+  note?: string;
 
   @ApiProperty({
     required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  password?: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => RestoreUpdateManyWithoutUsersInput,
+    type: () => RestoreUpdateManyWithoutBackupsInput,
   })
   @ValidateNested()
-  @Type(() => RestoreUpdateManyWithoutUsersInput)
+  @Type(() => RestoreUpdateManyWithoutBackupsInput)
   @IsOptional()
-  @Field(() => RestoreUpdateManyWithoutUsersInput, {
+  @Field(() => RestoreUpdateManyWithoutBackupsInput, {
     nullable: true,
   })
-  restores?: RestoreUpdateManyWithoutUsersInput;
+  restores?: RestoreUpdateManyWithoutBackupsInput;
 
   @ApiProperty({
     required: false,
+    type: Number,
   })
-  @IsJSONValue()
+  @IsInt()
   @IsOptional()
-  @Field(() => GraphQLJSON, {
+  @Field(() => Number, {
     nullable: true,
   })
-  roles?: InputJsonValue;
+  size?: number;
 
   @ApiProperty({
     required: false,
-    type: String,
+    enum: EnumBackupStatus,
   })
-  @IsString()
+  @IsEnum(EnumBackupStatus)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => EnumBackupStatus, {
     nullable: true,
   })
-  username?: string;
+  status?: "Success" | "Failed" | "OnProgress" | "Canceled" | "PartialSuccess";
 }
 
-export { UserUpdateInput as UserUpdateInput };
+export { BackupUpdateInput as BackupUpdateInput };

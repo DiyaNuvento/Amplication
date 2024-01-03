@@ -11,15 +11,20 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
+import {
+  IsDate,
+  IsInt,
+  IsString,
+  ValidateNested,
+  IsOptional,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { Restore } from "../../restore/base/Restore";
-import { IsJSONValue } from "../../validators";
-import { GraphQLJSON } from "graphql-type-json";
-import { JsonValue } from "type-fest";
+import { EnumBackupStatus } from "./EnumBackupStatus";
 
 @ObjectType()
-class User {
+class Backup {
   @ApiProperty({
     required: true,
   })
@@ -29,15 +34,12 @@ class User {
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
-    type: String,
+    required: true,
+    type: Number,
   })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  firstName!: string | null;
+  @IsInt()
+  @Field(() => Number)
+  fileCount!: number;
 
   @ApiProperty({
     required: true,
@@ -48,15 +50,12 @@ class User {
   id!: string;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  lastName!: string | null;
+  @Field(() => String)
+  note!: string;
 
   @ApiProperty({
     required: false,
@@ -69,10 +68,21 @@ class User {
 
   @ApiProperty({
     required: true,
+    type: Number,
   })
-  @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  roles!: JsonValue;
+  @IsInt()
+  @Field(() => Number)
+  size!: number;
+
+  @ApiProperty({
+    required: true,
+    enum: EnumBackupStatus,
+  })
+  @IsEnum(EnumBackupStatus)
+  @Field(() => EnumBackupStatus, {
+    nullable: true,
+  })
+  status?: "Success" | "Failed" | "OnProgress" | "Canceled" | "PartialSuccess";
 
   @ApiProperty({
     required: true,
@@ -81,14 +91,6 @@ class User {
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  username!: string;
 }
 
-export { User as User };
+export { Backup as Backup };
