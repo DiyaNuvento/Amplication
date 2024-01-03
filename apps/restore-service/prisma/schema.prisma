@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime  @default(now())
+  firstName String?
+  id        String    @id @default(cuid())
+  lastName  String?
+  password  String
+  restores  Restore[]
+  roles     Json
+  updatedAt DateTime  @updatedAt
+  username  String    @unique
+}
+
+model Restore {
+  backup    Backup?           @relation(fields: [backupId], references: [id])
+  backupId  String?
+  createdAt DateTime          @default(now())
+  createdBy User              @relation(fields: [id], references: [id])
+  id        String
+  details   Json?
+  id        String            @id @default(cuid())
+  status    EnumRestoreStatus
+  updatedAt DateTime          @updatedAt
+}
+
+model Backup {
+  createdAt DateTime         @default(now())
+  fileCount Int
+  id        String           @id @default(cuid())
+  note      String
+  restores  Restore[]
+  size      Int
+  status    EnumBackupStatus
+  updatedAt DateTime         @updatedAt
+}
+
+model EmailMap {
+  box            String?
+  createdAt      DateTime      @default(now())
+  fullName       String?
+  gDrive         String?
+  id             String        @id @default(cuid())
+  oneDrive       String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  thumbNail      String?
+  updatedAt      DateTime      @updatedAt
+}
+
+model Organization {
+  createdAt DateTime   @default(now())
+  emailMaps EmailMap[]
+  id        String     @id @default(cuid())
+  updatedAt DateTime   @updatedAt
+}
+
+enum EnumRestoreStatus {
+  Success
+  Failed
+}
+
+enum EnumBackupStatus {
+  Success
+  Failed
+  OnProgress
+  Canceled
+  PartialSuccess
+}
