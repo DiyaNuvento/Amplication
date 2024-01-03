@@ -45,6 +45,17 @@ class EmailMap {
   @Field(() => String, {
     nullable: true,
   })
+  fullName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   gDrive!: string | null;
 
   @ApiProperty({
@@ -74,6 +85,17 @@ class EmailMap {
   @Type(() => Organization)
   @IsOptional()
   organization?: Organization | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  thumbnail!: string | null;
 
   @ApiProperty({
     required: true,

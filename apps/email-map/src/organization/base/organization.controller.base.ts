@@ -144,6 +144,7 @@ export class OrganizationControllerBase {
       select: {
         box: true,
         createdAt: true,
+        fullName: true,
         gDrive: true,
         id: true,
         oneDrive: true,
@@ -154,6 +155,7 @@ export class OrganizationControllerBase {
           },
         },
 
+        thumbnail: true,
         updatedAt: true,
       },
     });
