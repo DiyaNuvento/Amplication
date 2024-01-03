@@ -20,35 +20,43 @@ const existingId = "existingId";
 const CREATE_INPUT = {
   box: "exampleBox",
   createdAt: new Date(),
+  fullName: "exampleFullName",
   gDrive: "exampleGDrive",
   id: "exampleId",
   oneDrive: "exampleOneDrive",
+  thumbnail: "exampleThumbnail",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
   box: "exampleBox",
   createdAt: new Date(),
+  fullName: "exampleFullName",
   gDrive: "exampleGDrive",
   id: "exampleId",
   oneDrive: "exampleOneDrive",
+  thumbnail: "exampleThumbnail",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
     box: "exampleBox",
     createdAt: new Date(),
+    fullName: "exampleFullName",
     gDrive: "exampleGDrive",
     id: "exampleId",
     oneDrive: "exampleOneDrive",
+    thumbnail: "exampleThumbnail",
     updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
   box: "exampleBox",
   createdAt: new Date(),
+  fullName: "exampleFullName",
   gDrive: "exampleGDrive",
   id: "exampleId",
   oneDrive: "exampleOneDrive",
+  thumbnail: "exampleThumbnail",
   updatedAt: new Date(),
 };
 

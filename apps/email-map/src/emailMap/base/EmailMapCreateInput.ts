@@ -37,6 +37,17 @@ class EmailMapCreateInput {
   @Field(() => String, {
     nullable: true,
   })
+  fullName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   gDrive?: string | null;
 
   @ApiProperty({
@@ -61,6 +72,17 @@ class EmailMapCreateInput {
     nullable: true,
   })
   organization?: OrganizationWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  thumbnail?: string | null;
 }
 
 export { EmailMapCreateInput as EmailMapCreateInput };

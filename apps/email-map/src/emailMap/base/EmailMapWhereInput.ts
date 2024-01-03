@@ -39,6 +39,17 @@ class EmailMapWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
+  fullName?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
   gDrive?: StringNullableFilter;
 
   @ApiProperty({
@@ -74,6 +85,17 @@ class EmailMapWhereInput {
     nullable: true,
   })
   organization?: OrganizationWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  thumbnail?: StringNullableFilter;
 }
 
 export { EmailMapWhereInput as EmailMapWhereInput };

@@ -43,6 +43,7 @@ export class EmailMapControllerBase {
       select: {
         box: true,
         createdAt: true,
+        fullName: true,
         gDrive: true,
         id: true,
         oneDrive: true,
@@ -53,6 +54,7 @@ export class EmailMapControllerBase {
           },
         },
 
+        thumbnail: true,
         updatedAt: true,
       },
     });
@@ -68,6 +70,7 @@ export class EmailMapControllerBase {
       select: {
         box: true,
         createdAt: true,
+        fullName: true,
         gDrive: true,
         id: true,
         oneDrive: true,
@@ -78,6 +81,7 @@ export class EmailMapControllerBase {
           },
         },
 
+        thumbnail: true,
         updatedAt: true,
       },
     });
@@ -94,6 +98,7 @@ export class EmailMapControllerBase {
       select: {
         box: true,
         createdAt: true,
+        fullName: true,
         gDrive: true,
         id: true,
         oneDrive: true,
@@ -104,6 +109,7 @@ export class EmailMapControllerBase {
           },
         },
 
+        thumbnail: true,
         updatedAt: true,
       },
     });
@@ -137,6 +143,7 @@ export class EmailMapControllerBase {
         select: {
           box: true,
           createdAt: true,
+          fullName: true,
           gDrive: true,
           id: true,
           oneDrive: true,
@@ -147,6 +154,7 @@ export class EmailMapControllerBase {
             },
           },
 
+          thumbnail: true,
           updatedAt: true,
         },
       });
@@ -172,6 +180,7 @@ export class EmailMapControllerBase {
         select: {
           box: true,
           createdAt: true,
+          fullName: true,
           gDrive: true,
           id: true,
           oneDrive: true,
@@ -182,6 +191,7 @@ export class EmailMapControllerBase {
             },
           },
 
+          thumbnail: true,
           updatedAt: true,
         },
       });
