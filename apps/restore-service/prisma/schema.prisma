@@ -42,6 +42,26 @@ model Backup {
   updatedAt DateTime         @updatedAt
 }
 
+model EmailMap {
+  box            String?
+  createdAt      DateTime      @default(now())
+  fullName       String?
+  gDrive         String?
+  id             String        @id @default(cuid())
+  oneDrive       String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  thumbNail      String?
+  updatedAt      DateTime      @updatedAt
+}
+
+model Organization {
+  createdAt DateTime   @default(now())
+  emailMaps EmailMap[]
+  id        String     @id @default(cuid())
+  updatedAt DateTime   @updatedAt
+}
+
 enum EnumRestoreStatus {
   Success
   Failed

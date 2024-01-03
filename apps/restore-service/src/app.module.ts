@@ -2,6 +2,8 @@ import { Module } from "@nestjs/common";
 import { UserModule } from "./user/user.module";
 import { RestoreModule } from "./restore/restore.module";
 import { BackupModule } from "./backup/backup.module";
+import { EmailMapModule } from "./emailMap/emailMap.module";
+import { OrganizationModule } from "./organization/organization.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -22,6 +24,8 @@ import { AuthModule } from "./auth/auth.module";
     UserModule,
     RestoreModule,
     BackupModule,
+    EmailMapModule,
+    OrganizationModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,
